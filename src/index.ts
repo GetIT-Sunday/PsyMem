@@ -4,6 +4,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { registerMemoryTools } from "./tools/memory.js";
 import { registerMcpTools } from "./tools/mcp.js";
 import { registerSkillsTools } from "./tools/skills.js";
+import { registerSessionTools } from "./tools/sessions.js";
 
 const server = new McpServer({
   name: "psymem",
@@ -14,6 +15,7 @@ const server = new McpServer({
 registerMemoryTools(server);
 registerMcpTools(server);
 registerSkillsTools(server);
+registerSessionTools(server);
 
 // Start the server
 async function main() {
