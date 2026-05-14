@@ -87,7 +87,7 @@ export function registerSkillsTools(server: McpServer) {
   // list_skills
   server.tool(
     "list_skills",
-    "List all available skills/plugins from installed marketplaces",
+    "List all available skills/plugins from installed marketplaces. IMPORTANT: You MUST reproduce the full list in your response text so the user can see it without expanding the tool output.",
     {
       category: z
         .string()
@@ -151,7 +151,7 @@ export function registerSkillsTools(server: McpServer) {
   // list_categories
   server.tool(
     "list_categories",
-    "List all available skill/plugin categories with counts",
+    "List all available skill/plugin categories with counts. IMPORTANT: You MUST reproduce the full list in your response text so the user can see it without expanding the tool output.",
     {},
     async () => {
       try {
@@ -248,7 +248,7 @@ export function registerSkillsTools(server: McpServer) {
   // search_skills
   server.tool(
     "search_skills",
-    "Search for skills/plugins by keyword across all marketplaces",
+    "Search for skills/plugins by keyword across all marketplaces. IMPORTANT: You MUST reproduce the full search results in your response text so the user can see them without expanding the tool output.",
     {
       query: z.string().describe("Search keyword"),
       sort: z

@@ -4,7 +4,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CLAUDE_SESSIONS, CLAUDE_PROJECTS, projectHashToPath } from "../paths.js";
 import { pathExists, listDir, isDirectory, readJson } from "../utils/fs.js";
-import { branded, brandedGuide } from "../format.js";
+import { branded, brandedGuide, brand, guide } from "../format.js";
 
 interface SessionMeta {
   id: string;
@@ -164,23 +164,24 @@ export function registerSessionTools(server: McpServer) {
   // list_sessions
   server.tool(
     "list_sessions",
-    "List all Claude Code conversation sessions with metadata",
+    "List all Claude Code conversation sessions with metadata. IMPORTANT: You MUST reproduce the full session list in your response text so the user can see it without expanding the tool output.",
     {
       project_path: z.string().optional().describe("Filter sessions by project path"),
       limit: z.number().optional().describe("Max sessions to show (default: 20)"),
     },
     async ({ project_path, limit }) => {
       try {
-        let sessions = await getSessionPreviews();
+        let allSessions = await getSessionPreviews();
 
         if (project_path) {
-          sessions = sessions.filter((s) =>
+          allSessions = allSessions.filter((s) =>
             s.project.includes(project_path) || s.project === project_path
           );
         }
 
+        const totalCount = allSessions.length;
         const max = limit || 20;
-        sessions = sessions.slice(0, max);
+        const sessions = allSessions.slice(0, max);
 
         if (sessions.length === 0) {
           return branded(
@@ -188,21 +189,131 @@ export function registerSessionTools(server: McpServer) {
           );
         }
 
-        let lines = `[Sessions] 共 ${sessions.length} 个对话\n\n`;
+        // Format plain text list
+        let text = `共 ${totalCount} 个会话${totalCount > max ? `（显示 ${max}）` : ""}：\n`;
         for (let i = 0; i < sessions.length; i++) {
           const s = sessions[i];
-          lines += `  ${i + 1}. [${s.startTime}] ${s.size}\n`;
-          lines += `     项目: ${s.project}\n`;
-          lines += `     ${s.preview}\n`;
-          lines += `     ID: ${s.id}\n\n`;
+          const proj = s.project.replace("/Users/wengchuangchuang", "~");
+          const preview = s.preview.replace(/\n/g, " ").slice(0, 50);
+          text += `${i + 1}. [${s.startTime}] ${s.size} | ${proj} | ${preview} | ID:${s.id}\n`;
         }
 
-        return brandedGuide(
-          lines,
-          "告诉我 '删除对话 [ID]' 来删除某个对话，或 '清空所有对话' 批量删除"
-        );
+        return {
+          content: [{ type: "text" as const, text }],
+          structuredContent: {
+            sessions: sessions.map((s, i) => ({
+              index: i + 1,
+              id: s.id,
+              time: s.startTime,
+              size: s.size,
+              project: s.project,
+              preview: s.preview.slice(0, 80),
+            })),
+            total: totalCount,
+            hint: "请用 markdown 表格完整展示以上会话列表，不要省略任何会话",
+          },
+        };
       } catch (e) {
-        return branded(`[Sessions] 列出对话失败\n\n${(e as Error).message}`);
+        return branded(`[!] 列出对话失败\n\n${(e as Error).message}`);
+      }
+    }
+  );
+
+  // read_session
+  server.tool(
+    "read_session",
+    "Read the conversation content of a specific Claude Code session",
+    {
+      session_id: z.string().describe("Session ID to read (from list_sessions)"),
+      max_messages: z.number().optional().describe("Max messages to show (default: 50)"),
+    },
+    async ({ session_id, max_messages }) => {
+      try {
+        const limit = max_messages || 50;
+        let filePath = "";
+
+        // Check sessions dir first
+        const sessionJson = path.join(CLAUDE_SESSIONS, `${session_id}.json`);
+        if (await pathExists(sessionJson)) {
+          filePath = sessionJson;
+        }
+
+        // Check project dirs for .jsonl
+        if (!filePath && await pathExists(CLAUDE_PROJECTS)) {
+          const projectDirs = await listDir(CLAUDE_PROJECTS);
+          for (const dir of projectDirs) {
+            const jsonlFile = path.join(CLAUDE_PROJECTS, dir, `${session_id}.jsonl`);
+            if (await pathExists(jsonlFile)) {
+              filePath = jsonlFile;
+              break;
+            }
+          }
+        }
+
+        if (!filePath) {
+          return branded(
+            `[!] 读取失败\n\n  未找到 ID 为 ${session_id} 的对话\n\n告诉我 '列出对话' 查看所有对话`
+          );
+        }
+
+        const content = await fs.readFile(filePath, "utf-8");
+        const isJsonl = filePath.endsWith(".jsonl");
+        let messages: { role: string; text: string }[] = [];
+
+        if (isJsonl) {
+          // JSONL format (project-level sessions)
+          const lines = content.split("\n");
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            try {
+              const obj = JSON.parse(line);
+              if (obj.type === "user" && obj.message) {
+                let text = "";
+                const c = obj.message.content;
+                if (typeof c === "string") text = c;
+                else if (Array.isArray(c)) {
+                  text = c.filter((b: any) => b.type === "text").map((b: any) => b.text).join("\n");
+                }
+                if (text) messages.push({ role: "user", text: text.slice(0, 500) });
+              } else if (obj.type === "assistant" && obj.message?.content) {
+                const c = obj.message.content;
+                if (Array.isArray(c)) {
+                  const textParts = c.filter((b: any) => b.type === "text").map((b: any) => b.text);
+                  if (textParts.length) messages.push({ role: "assistant", text: textParts.join("\n").slice(0, 500) });
+                }
+              }
+            } catch {}
+          }
+        } else {
+          // JSON format (session dir)
+          const data = await readJson<any>(filePath);
+          if (data.messages && Array.isArray(data.messages)) {
+            for (const msg of data.messages) {
+              if (msg.role === "user" && msg.blocks) {
+                const textParts = msg.blocks.filter((b: any) => b.type === "text").map((b: any) => b.text);
+                if (textParts.length) messages.push({ role: "user", text: textParts.join("\n").slice(0, 500) });
+              } else if (msg.role === "assistant" && msg.blocks) {
+                const textParts = msg.blocks.filter((b: any) => b.type === "text").map((b: any) => b.text);
+                if (textParts.length) messages.push({ role: "assistant", text: textParts.join("\n").slice(0, 500) });
+              }
+            }
+          }
+        }
+
+        if (messages.length === 0) {
+          return branded(`[Sessions] 读取完成\n\n  ID: ${session_id}\n  文件: ${filePath}\n\n  无可解析的对话内容`);
+        }
+
+        const shown = messages.slice(0, limit);
+        let body = `ID: ${session_id}\n共 ${messages.length} 条消息${messages.length > limit ? `（显示 ${limit}）` : ""}：\n\n`;
+        for (const msg of shown) {
+          const prefix = msg.role === "user" ? "[You]" : "[AI]";
+          body += `${prefix} ${msg.text}\n\n`;
+        }
+
+        return branded(body);
+      } catch (e) {
+        return branded(`[!] 读取失败\n\n${(e as Error).message}`);
       }
     }
   );

@@ -69,7 +69,7 @@ export function registerMemoryTools(server: McpServer) {
   // list_projects
   server.tool(
     "list_projects",
-    "List all Claude Code projects and their memory file status",
+    "List all Claude Code projects and their memory file status. IMPORTANT: You MUST reproduce the full list in your response text so the user can see it without expanding the tool output.",
     async () => {
       try {
         const entries = await listDir(CLAUDE_PROJECTS);
@@ -318,7 +318,7 @@ export function registerMemoryTools(server: McpServer) {
   // search_memories
   server.tool(
     "search_memories",
-    "Search for a keyword across all project memory files",
+    "Search for a keyword across all project memory files. IMPORTANT: You MUST reproduce the full search results in your response text so the user can see them without expanding the tool output.",
     {
       query: z.string().describe("Search keyword or phrase"),
       project_path: z.string().optional().describe("Limit search to a specific project path"),

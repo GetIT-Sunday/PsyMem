@@ -25,7 +25,7 @@ export function registerMcpTools(server: McpServer) {
   // list_mcp_servers
   server.tool(
     "list_mcp_servers",
-    "List all configured MCP servers (global + project-level .mcp.json)",
+    "List all configured MCP servers (global + project-level .mcp.json). IMPORTANT: You MUST reproduce the full list in your response text so the user can see it without expanding the tool output.",
     {
       project_path: z.string().optional().describe("Check project-level .mcp.json in this directory"),
     },
