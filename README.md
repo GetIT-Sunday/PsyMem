@@ -1,26 +1,86 @@
-# PsyMem
+<a name="psymem"></a>
+<p align="center">
+  <img src="assets/banner.png" alt="PsyMem banner" width="100%">
+</p>
 
-Claude Code 的记忆与配置管理 MCP Server。在 Claude Code 对话中直接管理记忆文件、MCP Server 配置和 Skills 商城。
+<p align="center">
+  <h1 align="center">🧠 PsyMem</h1>
+  <p align="center">
+    <strong>Memory & Config Management MCP Server for Claude Code</strong><br>
+    <em>Manage memory files, MCP servers, and Skills — right inside your Claude Code conversation</em>
+  </p>
+  <p align="center">
+    <a href="#-features">Features</a> •
+    <a href="#-installation">Installation</a> •
+    <a href="#-usage">Usage</a> •
+    <a href="#-tools-15">Tools</a>
+  </p>
+</p>
 
-## 功能
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License">
+  <img src="https://img.shields.io/badge/node-18+-yellow?style=flat-square" alt="Node">
+  <img src="https://img.shields.io/badge/MCP-server-8B5CF6?style=flat-square" alt="MCP">
+  <img src="https://img.shields.io/badge/Claude_Code-ready-E8534A?style=flat-square" alt="Claude Code">
+  <img src="https://img.shields.io/github/stars/GetIT-Sunday/PsyMem?style=social" alt="Stars">
+</p>
 
-### 记忆管理
-- 查看所有项目及其记忆文件状态
-- 读取 / 写入 / 删除项目的记忆文件
-- 用模板初始化记忆（project / personal / security）
-- 跨项目搜索记忆内容
+<p align="center">
+  <strong>English</strong> | <a href="README_ZH.md">中文</a>
+</p>
 
-### MCP Server 管理
-- 查看已配置的 MCP Server（全局 + 项目级 .mcp.json）
-- 添加 / 删除 / 修改 MCP Server 配置
+---
 
-### Skills 商城
-- 搜索和浏览 Claude Code 插件商城
-- 按分类筛选（development、security、monitoring 等）
-- 按推荐排序（有厂商署名的优先）
-- 直接安装 Skill
+## ✨ Features
 
-## 安装
+<table>
+  <tr>
+    <td width="50%">
+      <h3>🗂️ Memory Management</h3>
+      <ul>
+        <li>View all projects and their memory file status</li>
+        <li>Read / write / delete project memory files</li>
+        <li>Initialize memory from templates: <code>project</code>, <code>personal</code>, <code>security</code></li>
+        <li>Cross-project memory search</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3>⚙️ MCP Server Management</h3>
+      <ul>
+        <li>View configured MCP servers (global + project-level <code>.mcp.json</code>)</li>
+        <li>Add / remove / update MCP server configs</li>
+        <li>Manage both user-scope and project-scope servers</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🛒 Skills Marketplace</h3>
+      <ul>
+        <li>Browse the Claude Code Skills marketplace</li>
+        <li>Filter by category: development, security, monitoring, etc.</li>
+        <li>Sort by recommendation (vendor-signed skills first)</li>
+        <li>Install Skills directly from within Claude Code</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3>🔧 Zero Friction Setup</h3>
+      <ul>
+        <li>Single <code>claude mcp add</code> command to register</li>
+        <li>Works immediately after Claude Code restart</li>
+        <li>TypeScript, MCP SDK, Zod validation</li>
+        <li>15 tools, natural language interface</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<div align="right"><a href="#psymem">↑ back to top</a></div>
+
+---
+
+## 📦 Installation
 
 ```bash
 git clone https://github.com/GetIT-Sunday/PsyMem.git
@@ -29,61 +89,110 @@ npm install
 npm run build
 ```
 
-注册为 Claude Code MCP Server：
+Register as a Claude Code MCP server:
 
 ```bash
 claude mcp add -s user psymem -- node /path/to/PsyMem/dist/index.js
 ```
 
-重启 Claude Code 后生效。
+Restart Claude Code — PsyMem is ready.
 
-## 工具列表（15 个）
+<div align="right"><a href="#psymem">↑ back to top</a></div>
 
-| 工具 | 说明 |
-|------|------|
-| `list_projects` | 列出所有项目及记忆状态 |
-| `read_memory` | 读取项目记忆文件 |
-| `write_memory` | 创建或更新记忆文件 |
-| `delete_memory` | 删除记忆文件 |
-| `init_memory` | 用模板初始化记忆 |
-| `search_memories` | 跨项目搜索记忆 |
-| `list_mcp_servers` | 列出已配置的 MCP Server |
-| `add_mcp_server` | 添加 MCP Server |
-| `remove_mcp_server` | 删除 MCP Server |
-| `update_mcp_server` | 修改 MCP Server |
-| `list_skills` | 浏览 Skills 商城 |
-| `list_categories` | 列出所有 Skills 分类 |
-| `read_skill` | 查看 Skill 详情 |
-| `search_skills` | 搜索 Skills |
-| `install_skill` | 安装 Skill |
+---
 
-## 使用示例
+## 💬 Usage
 
-在 Claude Code 对话中直接用自然语言：
+Just talk to Claude Code naturally:
 
 ```
-帮我看看我有哪些项目和记忆文件
-初始化这个项目的 CLAUDE.md
-搜索所有记忆中包含 "TypeScript" 的内容
-我配了哪些 MCP servers
-搜索 security 相关的 skills
-查看 skill semgrep 的详情
-安装 skill security-guidance
+Show me all my projects and memory files
+Initialize CLAUDE.md for this project
+Search all memories for "TypeScript"
+What MCP servers do I have configured?
+Browse security-related Skills
+Show me the semgrep skill details
+Install the security-guidance skill
 ```
 
-## 开发
+<div align="right"><a href="#psymem">↑ back to top</a></div>
+
+---
+
+## 🛠️ Tools (15)
+
+| Tool | Description |
+|------|-------------|
+| `list_projects` | List all projects and memory status |
+| `read_memory` | Read a project's memory file |
+| `write_memory` | Create or update a memory file |
+| `delete_memory` | Delete a memory file |
+| `init_memory` | Initialize memory from template |
+| `search_memories` | Cross-project memory search |
+| `list_mcp_servers` | List configured MCP servers |
+| `add_mcp_server` | Add an MCP server |
+| `remove_mcp_server` | Remove an MCP server |
+| `update_mcp_server` | Update MCP server config |
+| `list_skills` | Browse Skills marketplace |
+| `list_categories` | List all Skill categories |
+| `read_skill` | View Skill details |
+| `search_skills` | Search Skills |
+| `install_skill` | Install a Skill |
+
+<div align="right"><a href="#psymem">↑ back to top</a></div>
+
+---
+
+## 📁 Project Structure
+
+```
+PsyMem/
+├── src/
+│   └── index.ts      # MCP server entry point (15 tools)
+├── dist/             # Compiled output
+├── package.json
+└── tsconfig.json
+```
+
+<div align="right"><a href="#psymem">↑ back to top</a></div>
+
+---
+
+## 🧪 Development
 
 ```bash
-npm run build    # 编译 TypeScript
-npm start        # 启动 MCP Server
+npm run build    # Compile TypeScript
+npm start        # Start MCP server
 ```
 
-## 技术栈
+<div align="right"><a href="#psymem">↑ back to top</a></div>
 
-- TypeScript
-- [@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/typescript-sdk)
-- [Zod](https://github.com/colinhacks/zod)
+---
 
-## License
+## 🤝 Contributing
 
-MIT
+Contributions welcome — open an issue or PR.
+
+<div align="right"><a href="#psymem">↑ back to top</a></div>
+
+---
+
+## 📄 License
+
+MIT — see [LICENSE](LICENSE) for details.
+
+---
+
+<p align="center">
+  <strong>⭐ If PsyMem improved your Claude Code workflow, give it a Star!</strong>
+</p>
+
+<p align="center">
+  <a href="https://star-history.com/#GetIT-Sunday/PsyMem&Date">
+    <img src="https://api.star-history.com/svg?repos=GetIT-Sunday/PsyMem&type=Date" alt="Star History Chart" width="600">
+  </a>
+</p>
+
+<p align="center">
+  <sub>Made with ✨ by <a href="https://github.com/GetIT-Sunday">GetIT-Sunday</a> using <a href="https://github.com/GetIT-Sunday/ReadmeMagic-github-readme-design-skill">ReadmeMagic</a></sub>
+</p>
