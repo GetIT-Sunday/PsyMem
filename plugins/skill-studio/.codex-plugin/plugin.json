@@ -1,0 +1,21 @@
+{
+  "name": "skill-studio",
+  "version": "0.1.0",
+  "description": "Inspect Codex Skills before you use or modify them.",
+  "author": {
+    "name": "Local developer"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Skill Studio",
+    "shortDescription": "Inspect local Skills and their Prompt instructions.",
+    "longDescription": "Skill Studio discovers local Codex Skills and explains their Prompt files and supporting resources.",
+    "developerName": "Local developer",
+    "category": "Productivity",
+    "capabilities": ["Read"],
+    "defaultPrompt": [
+      "Use Skill Studio to inspect the local Codex Skills before using one."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}
