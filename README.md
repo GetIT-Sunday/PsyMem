@@ -1,6 +1,14 @@
 <a name="psymem"></a>
 <p align="center">
-  <img src="assets/banner.png" alt="PsyMem banner" width="100%">
+<img src="assets/banner.png" alt="PsyMem banner" width="100%">
+</p>
+
+<p align="center">
+<img src="assets/psymem-workflow.svg" alt="PsyMem workflow" width="100%">
+</p>
+
+<p align="center">
+<img src="assets/skill-studio-demo.svg" alt="Skill Studio tested walkthrough" width="100%">
 </p>
 
 <p align="center">
@@ -114,6 +122,12 @@ Browse security-related Skills
 Show me the semgrep skill details
 Install the security-guidance skill
 ```
+
+### A complete walkthrough
+
+PsyMem maps natural-language requests to focused MCP tools and returns results you can continue to explore. With Skill Studio installed, Codex can inspect a Skill's Prompt, source, and preferred version before you use it or create a personal fork.
+
+**Tested Skill Studio flow:** select a Skill → inspect the preferred version → fork a personal copy → edit and save the Prompt → open Diff → share the selection into the conversation → restore the original.
 
 <div align="right"><a href="#psymem">↑ back to top</a></div>
 
