@@ -6,8 +6,8 @@
 <p align="center">
   <h1 align="center">🧠 PsyMem</h1>
   <p align="center">
-    <strong>Memory & Config Management MCP Server for Claude Code</strong><br>
-    <em>Manage memory files, MCP servers, and Skills — right inside your Claude Code conversation</em>
+    <strong>Skill Studio for Codex</strong><br>
+    <em>Understand, review, edit, and safely use third-party Skills before they enter your workflow</em>
   </p>
   <p align="center">
     <a href="#-features">Features</a> •
@@ -30,43 +30,45 @@
   <strong>English</strong> | <a href="README_ZH.md">中文</a>
 </p>
 ---
-## ✨ Features
+## ✨ Why Skill Studio?
+
+Downloading a Skill should not mean trusting a black box. Skill Studio gives you a clear review-and-control loop inside Codex:
+
+<p align="center"><strong>Inspect → Explain → Fork → Edit → Diff → Select the preferred version → Share to chat</strong></p>
 
 <table>
   <tr>
     <td width="50%">
-      <h3>🗂️ Memory Management</h3>
+      <h3>🔍 Inspect before you trust</h3>
       <ul>
-        <li>View all projects and their memory file status</li>
-        <li>Read / write / delete project memory files</li>
-        <li>Initialize memory from templates: <code>project</code>, <code>personal</code>, <code>security</code></li>
-        <li>Cross-project memory search</li>
+        <li>Read a Skill's Prompt, source, and origin</li>
+        <li>See which version is currently preferred</li>
+        <li>Ask for a plain-language explanation before use</li>
       </ul>
     </td>
     <td width="50%">
-      <h3>⚙️ MCP Server Management</h3>
+      <h3>🛠️ Edit without breaking upstream</h3>
       <ul>
-        <li>View configured MCP servers (global + project-level <code>.mcp.json</code>)</li>
-        <li>Add / remove / update MCP server configs</li>
-        <li>Manage both user-scope and project-scope servers</li>
+        <li>Fork a personal copy of any Skill</li>
+        <li>Edit and save your Prompt safely</li>
+        <li>Review changes with a focused Diff</li>
       </ul>
     </td>
   </tr>
   <tr>
     <td width="50%">
-      <h3>🛒 Skills Marketplace</h3>
+      <h3>💬 Connect it to the conversation</h3>
       <ul>
-        <li>Browse the Claude Code Skills marketplace</li>
-        <li>Filter by category: development, security, monitoring, etc.</li>
-        <li>Sort by recommendation (vendor-signed skills first)</li>
-        <li>Install Skills directly from within Claude Code</li>
+        <li>Share the selected Skill context into Codex</li>
+        <li>Use the preferred version explicitly</li>
+        <li>Restore the original when needed</li>
       </ul>
     </td>
     <td width="50%">
-      <h3>🔧 Zero Friction Setup</h3>
+      <h3>🔧 Works with your existing setup</h3>
       <ul>
-        <li>Single <code>claude mcp add</code> command to register</li>
-        <li>Works immediately after Claude Code restart</li>
+        <li>Built as a Codex Plugin + MCP server</li>
+        <li>Works with local Skills already on disk</li>
         <li>TypeScript, MCP SDK, Zod validation</li>
         <li>15 tools, natural language interface</li>
       </ul>
@@ -76,7 +78,7 @@
 
 ## 🧭 How it fits together
 
-PsyMem turns natural-language requests into safe, focused MCP operations for memory, MCP configuration, and Skills.
+PsyMem keeps the Skill itself visible and controllable while you work in Codex.
 
 <p align="center">
 <img src="assets/psymem-workflow.svg" alt="PsyMem workflow" width="92%">
@@ -91,26 +93,24 @@ npm install
 npm run build
 ```
 
-Register as a Claude Code MCP server:
+Register the MCP server:
 
 ```bash
 claude mcp add -s user psymem -- node /path/to/PsyMem/dist/index.js
 ```
 
-Restart Claude Code — PsyMem is ready.
+Restart Codex, then open Skill Studio from the plugin interface.
 ---
 ## 💬 Usage
 
-Just talk to Claude Code naturally:
+In Codex, use the Skill Studio panel to:
 
 ```
-Show me all my projects and memory files
-Initialize CLAUDE.md for this project
-Search all memories for "TypeScript"
-What MCP servers do I have configured?
-Browse security-related Skills
-Show me the semgrep skill details
-Install the security-guidance skill
+1. Select a third-party Skill.
+2. Inspect its Prompt, source, and preferred version.
+3. Choose **Explain this Skill** before using it.
+4. Fork, edit, save, and review the Diff.
+5. Share the selected version into the active conversation.
 ```
 
 ### A complete walkthrough
@@ -123,7 +123,9 @@ PsyMem maps natural-language requests to focused MCP tools and returns results y
 <img src="assets/skill-studio-demo.svg" alt="Skill Studio tested walkthrough" width="92%">
 </p>
 
-## 🛠️ Tools (15)
+## 🧩 Core MCP tools
+
+Skill Studio is the primary experience. PsyMem also exposes the following MCP tools for local Skill discovery and compatibility:
 
 | Tool | Description |
 |------|-------------|

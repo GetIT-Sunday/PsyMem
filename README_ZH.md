@@ -6,8 +6,8 @@
 <p align="center">
   <h1 align="center">🧠 PsyMem</h1>
   <p align="center">
-    <strong>Claude Code 的记忆与配置管理 MCP Server</strong><br>
-    <em>在 Claude Code 对话中直接管理记忆文件、MCP 服务器和 Skills 商城</em>
+    <strong>面向 Codex 的 Skill Studio</strong><br>
+    <em>在第三方 Skill 进入工作流之前，先看懂、审查、编辑并安全使用它</em>
   </p>
   <p align="center">
     <a href="#-功能特性">功能特性</a> •
@@ -32,7 +32,9 @@
 
 ---
 
-## ✨ 功能特性
+## ✨ 为什么需要 Skill Studio？
+
+下载一个 Skill 不应该等于盲目信任。Skill Studio 在 Codex 中提供完整的审阅与控制闭环：查看 → 解释 → 创建副本 → 编辑 → Diff → 选择优先版本 → 分享到对话。
 
 <table>
   <tr>
