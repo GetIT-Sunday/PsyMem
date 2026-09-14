@@ -4,14 +4,6 @@
 </p>
 
 <p align="center">
-<img src="assets/psymem-workflow.svg" alt="PsyMem 工作流" width="100%">
-</p>
-
-<p align="center">
-<img src="assets/skill-studio-demo.svg" alt="Skill Studio 实测体验" width="100%">
-</p>
-
-<p align="center">
   <h1 align="center">🧠 PsyMem</h1>
   <p align="center">
     <strong>Claude Code 的记忆与配置管理 MCP Server</strong><br>
@@ -88,6 +80,16 @@
 
 ---
 
+## 🧭 整体工作流
+
+PsyMem 将自然语言请求转换为面向记忆、MCP 配置和 Skills 的安全、聚焦的 MCP 操作。
+
+<p align="center">
+<img src="assets/psymem-workflow.svg" alt="PsyMem 工作流" width="92%">
+</p>
+
+---
+
 ## 📦 安装
 
 ```bash
@@ -128,6 +130,10 @@ claude mcp add -s user psymem -- node /path/to/PsyMem/dist/index.js
 PsyMem 会把自然语言请求转换为对应的 MCP 工具调用，并返回可继续追问的结果。安装 Skill Studio 后，还可以在 Codex 中先检查 Skill 的 Prompt、来源和优先版本，再决定是否使用或编辑个人副本。
 
 **已实测的 Skill Studio 流程：**选择 Skill → 查看优先版本 → Fork 个人副本 → 编辑并保存 Prompt → 查看 Diff → 将选择分享到对话 → 恢复原始版本。
+
+<p align="center">
+<img src="assets/skill-studio-demo.svg" alt="Skill Studio 实测体验" width="92%">
+</p>
 
 <div align="right"><a href="#psymem">↑ 返回顶部</a></div>
 

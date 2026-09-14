@@ -4,14 +4,6 @@
 </p>
 
 <p align="center">
-<img src="assets/psymem-workflow.svg" alt="PsyMem workflow" width="100%">
-</p>
-
-<p align="center">
-<img src="assets/skill-studio-demo.svg" alt="Skill Studio tested walkthrough" width="100%">
-</p>
-
-<p align="center">
   <h1 align="center">🧠 PsyMem</h1>
   <p align="center">
     <strong>Memory & Config Management MCP Server for Claude Code</strong><br>
@@ -88,6 +80,16 @@
 
 ---
 
+## 🧭 How it fits together
+
+PsyMem turns natural-language requests into safe, focused MCP operations for memory, MCP configuration, and Skills.
+
+<p align="center">
+<img src="assets/psymem-workflow.svg" alt="PsyMem workflow" width="92%">
+</p>
+
+---
+
 ## 📦 Installation
 
 ```bash
@@ -128,6 +130,10 @@ Install the security-guidance skill
 PsyMem maps natural-language requests to focused MCP tools and returns results you can continue to explore. With Skill Studio installed, Codex can inspect a Skill's Prompt, source, and preferred version before you use it or create a personal fork.
 
 **Tested Skill Studio flow:** select a Skill → inspect the preferred version → fork a personal copy → edit and save the Prompt → open Diff → share the selection into the conversation → restore the original.
+
+<p align="center">
+<img src="assets/skill-studio-demo.svg" alt="Skill Studio tested walkthrough" width="92%">
+</p>
 
 <div align="right"><a href="#psymem">↑ back to top</a></div>
 
