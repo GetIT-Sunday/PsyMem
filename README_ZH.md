@@ -1,6 +1,6 @@
 <a name="psymem"></a>
 <p align="center">
-<img src="assets/banner.png" alt="PsyMem banner" width="100%">
+<img src="assets/banner-skill-studio.png" alt="面向 Codex 的 PsyMem Skill Studio" width="100%">
 </p>
 
 <p align="center">
@@ -9,12 +9,7 @@
     <strong>面向 Codex 的 Skill Studio</strong><br>
     <em>在第三方 Skill 进入工作流之前，先看懂、审查、编辑并安全使用它</em>
   </p>
-  <p align="center">
-    <a href="#-功能特性">功能特性</a> •
-    <a href="#-安装">安装</a> •
-    <a href="#-使用方法">使用方法</a> •
-    <a href="#-工具列表-15-个">工具列表</a>
-  </p>
+  <p align="center"><a href="#为什么需要-skill-studio">为什么需要 Skill Studio？</a> · <a href="#安装">安装</a> · <a href="#快速开始">快速开始</a> · <a href="#核心-mcp-工具">MCP 工具</a></p>
 </p>
 
 <p align="center">
@@ -30,8 +25,99 @@
   <a href="README.md">English</a> | <strong>中文</strong>
 </p>
 
+<p align="center">
+<img src="assets/skill-studio-codex-inline.png" alt="PsyMem Skill Studio 嵌入 Codex 对话" width="94%">
+</p>
 ---
+<a name="核心亮点"></a>
+## ✨ 核心亮点
 
+| 使用前先审阅 | 修改而不破坏原版 | 与当前对话协同 |
+|---|---|---|
+| 查看 Prompt、来源、源码和当前优先版本。 | 创建个人副本，编辑、保存、恢复并查看 Diff。 | 解释 Skill、选择启用版本，并将上下文分享到 Codex。 |
+
+<a name="安装"></a>
+## 📦 安装
+
+```bash
+git clone https://github.com/GetIT-Sunday/PsyMem.git
+cd PsyMem
+npm install
+npm run build
+```
+
+仓库包含两层能力：
+
+- **面向 Codex 的 Skill Studio**：核心产品，用于查看、解释、Fork、编辑、Diff 和选择 Skill 版本。
+- **面向 Claude Code 的 PsyMem MCP Server**：兼容层，用于提供本地记忆、MCP 配置和 Skill 发现工具。
+
+如果需要 Claude Code 兼容层，请注册 MCP Server：
+
+```bash
+claude mcp add -s user psymem -- node /path/to/PsyMem/dist/index.js
+```
+
+重启 Claude Code 使 MCP Server 生效；在 Codex 中启用本地插件，然后从当前对话打开 Skill Studio。
+
+<a name="快速开始"></a>
+## 🚀 快速开始
+
+在 Codex 当前对话中使用 Skill Studio：
+
+```
+1. 选择一个第三方 Skill。
+2. 查看 Prompt、来源和当前优先版本。
+3. 点击“解释这个 Skill”。
+4. 创建个人副本、编辑、保存并查看 Diff。
+5. 将选中的版本分享到当前对话。
+```
+
+### 一次完整体验
+
+PsyMem 会把自然语言请求转换为对应的 MCP 工具调用，并返回可继续追问的结果。安装 Skill Studio 后，还可以在 Codex 中先检查 Skill 的 Prompt、来源和优先版本，再决定是否使用或编辑个人副本。
+
+**已实测的 Skill Studio 流程：**选择 Skill → 查看优先版本 → Fork 个人副本 → 编辑并保存 Prompt → 查看 Diff → 将选择分享到对话 → 恢复原始版本。
+
+<p align="center">
+<img src="assets/skill-studio-demo.svg" alt="Skill Studio 实测体验" width="92%">
+</p>
+
+<p align="center">
+<img src="assets/skill-studio-codex-inline.png" alt="Skill Studio 嵌入 Codex 对话的实测界面" width="94%">
+</p>
+
+<a name="命令参考"></a>
+## 🧭 命令参考
+
+Verified entry point:
+
+```bash
+npm run start
+```
+---
+<a name="文档"></a>
+## 📖 文档
+
+更多说明和示例请参阅本仓库。
+
+<a name="项目结构"></a>
+## 🗂️ 项目结构
+
+```text
+PsyMem/
+|-- assets/
+|-- plugins/
+|-- src/
+|-- .gitignore
+|-- package-lock.json
+|-- package.json
+|-- README.md
+|-- README.md.bak
+|-- README_ZH.md
+`-- tsconfig.json
+```
+---
+<a name="✨-为什么需要-skill-studio？"></a>
 ## ✨ 为什么需要 Skill Studio？
 
 下载一个 Skill 不应该等于盲目信任。Skill Studio 在 Codex 中提供完整的审阅与控制闭环：查看 → 解释 → 创建副本 → 编辑 → Diff → 选择优先版本 → 分享到对话。
@@ -78,69 +164,7 @@
   </tr>
 </table>
 
-<div align="right"><a href="#psymem">↑ 返回顶部</a></div>
-
----
-
-## 🧭 整体工作流
-
-PsyMem 将自然语言请求转换为面向记忆、MCP 配置和 Skills 的安全、聚焦的 MCP 操作。
-
-<p align="center">
-<img src="assets/psymem-workflow.svg" alt="PsyMem 工作流" width="92%">
-</p>
-
----
-
-## 📦 安装
-
-```bash
-git clone https://github.com/GetIT-Sunday/PsyMem.git
-cd PsyMem
-npm install
-npm run build
-```
-
-注册为 Claude Code MCP Server：
-
-```bash
-claude mcp add -s user psymem -- node /path/to/PsyMem/dist/index.js
-```
-
-重启 Claude Code 后即可使用。
-
-<div align="right"><a href="#psymem">↑ 返回顶部</a></div>
-
----
-
-## 💬 使用方法
-
-在 Claude Code 对话中直接用自然语言：
-
-```
-帮我看看我有哪些项目和记忆文件
-初始化这个项目的 CLAUDE.md
-搜索所有记忆中包含 "TypeScript" 的内容
-我配了哪些 MCP servers
-搜索 security 相关的 skills
-查看 skill semgrep 的详情
-安装 skill security-guidance
-```
-
-### 一次完整体验
-
-PsyMem 会把自然语言请求转换为对应的 MCP 工具调用，并返回可继续追问的结果。安装 Skill Studio 后，还可以在 Codex 中先检查 Skill 的 Prompt、来源和优先版本，再决定是否使用或编辑个人副本。
-
-**已实测的 Skill Studio 流程：**选择 Skill → 查看优先版本 → Fork 个人副本 → 编辑并保存 Prompt → 查看 Diff → 将选择分享到对话 → 恢复原始版本。
-
-<p align="center">
-<img src="assets/skill-studio-demo.svg" alt="Skill Studio 实测体验" width="92%">
-</p>
-
-<div align="right"><a href="#psymem">↑ 返回顶部</a></div>
-
----
-
+<a name="🛠️-工具列表（15-个）"></a>
 ## 🛠️ 工具列表（15 个）
 
 | 工具 | 说明 |
@@ -161,10 +185,7 @@ PsyMem 会把自然语言请求转换为对应的 MCP 工具调用，并返回�
 | `search_skills` | 搜索 Skills |
 | `install_skill` | 安装 Skill |
 
-<div align="right"><a href="#psymem">↑ 返回顶部</a></div>
-
----
-
+<a name="🧪-开发"></a>
 ## 🧪 开发
 
 ```bash
@@ -172,26 +193,25 @@ npm run build    # 编译 TypeScript
 npm start        # 启动 MCP Server
 ```
 
-<div align="right"><a href="#psymem">↑ 返回顶部</a></div>
+<a name="参与贡献"></a>
+## 🤝 参与贡献
 
+欢迎提交 Issue 和 Pull Request。提交代码前，请先运行项目测试。
 ---
-
+<a name="许可证"></a>
 ## 📄 许可证
 
 MIT — 详见 [LICENSE](LICENSE)
 
----
-
 <p align="center">
   <strong>⭐ 如果 PsyMem 改善了你的 Claude Code 工作流，请给一个 Star！</strong>
 </p>
-
+<p align="center">
+  <sub>Made with ✨ by <a href="https://github.com/GetIT-Sunday">GetIT-Sunday</a> using <a href="https://github.com/GetIT-Sunday/ReadmeMagic-github-readme-design-skill">ReadmeMagic</a></sub>
+</p>
+---
 <p align="center">
   <a href="https://star-history.com/#GetIT-Sunday/PsyMem&Date">
     <img src="https://api.star-history.com/svg?repos=GetIT-Sunday/PsyMem&type=Date" alt="Star History Chart" width="600">
   </a>
-</p>
-
-<p align="center">
-  <sub>Made with ✨ by <a href="https://github.com/GetIT-Sunday">GetIT-Sunday</a> using <a href="https://github.com/GetIT-Sunday/ReadmeMagic-github-readme-design-skill">ReadmeMagic</a></sub>
 </p>
